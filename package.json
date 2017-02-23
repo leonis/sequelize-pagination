@@ -1,0 +1,32 @@
+{
+  "name": "sequelize-paginate",
+  "version": "1.0.0",
+  "description": "sequelize plugin to paginate query response using scope.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/leonis/sequelize-paginate.git"
+  },
+  "keywords": [
+    "sequelize",
+    "pagination"
+  ],
+  "author": "dev@irow.io",
+  "license": "UNLICENSED",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/leonis/sequelize-paginate/issues"
+  },
+  "homepage": "https://github.com/leonis/sequelize-paginate#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.16.1",
+    "eslint-config-leonis": "^0.0.6",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
+    "sequelize": "^3.30.2"
+  }
+}

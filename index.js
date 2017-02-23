@@ -28,7 +28,7 @@ const parseToInt = (value, defaultValue) => {
   }
 
   try {
-    const v = parseInt(value);
+    const v = parseInt(value, 10);
     if (v < 0) {
       return defaultValue;
     }
@@ -45,13 +45,15 @@ const parseToInt = (value, defaultValue) => {
  * @param {Object} page - page object.
  * @param {Number|String} page.size - size per page.
  * @param {Number|String} page.number - number of page.
+ * @param {Object} options - config object
+ * @param {Number} options.size - size per page.
  * @return {Object} pagination info which contains pageNumber and pageSize properties.
  */
 const parseParams = (page, options) => {
   return {
     pageNumber: parseToInt(page.number, 1),
     pageSize: parseToInt(page.size, options.size)
-  }
+  };
 };
 
 /**
@@ -68,7 +70,7 @@ const calcPagination = (page, options) => {
 
   return {
     limit: parsed.pageSize,
-    offset: calcOffset(parsed.pageSize, parsed.pageNumber),
+    offset: calcOffset(parsed.pageSize, parsed.pageNumber)
   };
 };
 
@@ -105,6 +107,31 @@ class Pagination {
       return result;
     });
 
+    /**
+     * Get current page
+     *
+     * @param {Object} page - page object
+     * @param {Number|String} page.size - size per page.
+     * @param {Number|String} page.number - number of the page.
+     * @return {Object} current page info which contains number and size properties.
+     */
+    cls.currentPage = function(page) {
+      const parsed = parseParams(page, cls.pagination);
+
+      return {
+        number: parsed.pageNumber,
+        size: parsed.size
+      };
+    };
+
+    /**
+     * Get next page
+     *
+     * @param {Object} page - page object
+     * @param {Number|String} page.size - size per page.
+     * @param {Number|String} page.number - number of the page.
+     * @return {Object} next page info which contains number and size properties.
+     */
     cls.nextPage = function(page) {
       const parsed = parseParams(page, cls.pagination);
 

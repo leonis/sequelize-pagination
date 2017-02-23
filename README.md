@@ -1,19 +1,19 @@
-# sequelize-paginate
+# sequelize-pagination
 
-sequelize plugin to paginate query response using scope.
+`sequelize-pagination` is a Sequelize plugin to make the sequelize model paginatable.
 
 # NOTE
 
-This plugin use 'number' and 'size' for pagination.
+This plugin use 'number' and 'size' parameters to paginate the sql query.
 
-- `number` is a integer and begins from 1.
+- `number` is a integer and begins from **1** (not 0).
 - `size` is a integer and should be larger than 0.
 
 # Usage
 
 ## Configuration
 
-Pass Sequelize model class to make the model class paginatable.
+Just pass Sequelize model class to make the model class paginatable.
 
 ```javascript
 'use strict';
@@ -30,7 +30,10 @@ const ModelClass = require('./path/to/model_class.js');
 // This add these functionality.
 // - pagination scope
 // - nextPage as Class method.
-Pagination.paginatable(Service);
+Pagination.paginatable(ModelClass);
+
+// Model level config supported.
+Pagination.paginatable(ModelClass, {size: 40});
 ```
 
 ## HowToUse

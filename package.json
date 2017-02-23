@@ -1,10 +1,12 @@
 {
   "name": "sequelize-paginate",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "sequelize plugin to paginate query response using scope.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test istanbul cover node_modules/.bin/_mocha",
+    "lint": "eslint ./index.js ./test",
+    "ci": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "sequelize": "^3.30.2"
+  },
+  "eslintConfig": {
+    "extends": "leonis"
   }
 }

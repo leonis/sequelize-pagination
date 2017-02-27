@@ -1,6 +1,6 @@
 {
   "name": "sequelize-paginate",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "sequelize plugin to paginate query response using scope.",
   "main": "index.js",
   "scripts": {

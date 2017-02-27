@@ -58,3 +58,48 @@ ModelClass.nextPage(params);
 ModelClass.pagination
 => {size: 10}
 ```
+
+# HowToDevelop
+
+## Prepare
+
+### Install packages
+
+```
+$ cd path/to/this/repo/root
+$ yarn install
+```
+
+### Define environment variables.
+
+```
+export POSTGRES_USER=postgres
+export POSTGRES_PASSWORD=postgres
+
+export TEST_DB=postgres://robin:password@localhost:5442/ci_test
+```
+
+### Launch a database for test.
+
+Use `docker-compose`!
+
+```
+$ docker-compose up
+```
+
+### Test
+
+Create a table for testcase.
+
+```
+$ psql -U postgres -f ./database/bootstrap.sql
+```
+
+Use tasks in package.json.
+
+```
+$ npm run ci
+
+# or
+$ yarnkpkg run ci
+```

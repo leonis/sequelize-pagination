@@ -16,6 +16,30 @@ const calcOffset = (pageSize, pageNumber) => {
 };
 
 /**
+ * Check whether the value looks like number or not.
+ *
+ * @param {String|Number|Object} value - target value
+ * @return {boolean} true if the value looks like number.
+ */
+const looksLikeNumber = (value) => {
+  const cls = Object.prototype.toString.call(value).slice(8, -1);
+
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  if (cls === 'Number') {
+    return true;
+  }
+
+  if (cls === 'String') {
+    return (value.match(/^\d+$/));
+  }
+
+  return false;
+};
+
+/**
  * Parse value to integer.
  *
  * @param {String|Number} value - target value.
@@ -24,6 +48,10 @@ const calcOffset = (pageSize, pageNumber) => {
  */
 const parseToInt = (value, defaultValue) => {
   if (value === undefined) {
+    return defaultValue;
+  }
+
+  if (!looksLikeNumber(value)) {
     return defaultValue;
   }
 
@@ -56,24 +84,6 @@ const parseParams = (page, options) => {
   };
 };
 
-/**
- * Calculate pagination info.
- *
- * @param {Object} page - parameter object.
- * @param {Number|String} page.size - size per page.
- * @param {Number|String} page.number - number of page.
- * @param {Object} options - options which contains default config.
- * @return {Object} pagination info which contains limit , offset properties.
- */
-const calcPagination = (page, options) => {
-  const parsed = parseParams(page, options);
-
-  return {
-    limit: parsed.pageSize,
-    offset: calcOffset(parsed.pageSize, parsed.pageNumber)
-  };
-};
-
 const DefaultConfig = {
   size: 20
 };
@@ -101,10 +111,12 @@ class Pagination {
     cls.pagination = opts;
 
     cls.addScope('paginate', function(params) {
-      const result = calcPagination(params, this.pagination);
-      console.log('Result', result);
+      const parsed = parseParams((params || {}), this.pagination);
 
-      return result;
+      return {
+        limit: parsed.pageSize,
+        offset: calcOffset(parsed.pageSize, parsed.pageNumber)
+      };
     });
 
     /**
@@ -120,7 +132,7 @@ class Pagination {
 
       return {
         number: parsed.pageNumber,
-        size: parsed.size
+        size: parsed.pageSize
       };
     };
 

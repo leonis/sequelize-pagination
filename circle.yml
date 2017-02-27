@@ -1,0 +1,20 @@
+machine:
+  environment:
+    TEST_DB: postgres://postgres:@localhost:5432/ci_test
+    YARN_VERSION: 0.20.3
+  node:
+    version: 4.3.2
+  services:
+    - postgresql
+  post:
+    - if [[ $(yarn --version 2>/dev/null) != "${YARN_VERSION}" ]]; then curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION; fi
+
+dependencies:
+  cache_directories:
+    - "~/.cache/yarn/"
+  override:
+    - yarn install --prefer-offline
+
+database:
+  override:
+    - psql -U postgres -f $HOME/$CIRCLE_PROJECT_REPONAME/database/bootstrap.sql

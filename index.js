@@ -117,7 +117,7 @@ class Pagination {
         limit: parsed.pageSize,
         offset: calcOffset(parsed.pageSize, parsed.pageNumber)
       };
-    });
+    }, {override: true});
 
     /**
      * Get current page

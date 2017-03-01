@@ -216,18 +216,38 @@ describe('Pagination', () => {
   });
 
   describe('currentPage', () => {
-    it('should return currentPage', () => {
-      const params = {number: '30', size: '10'};
-      const result = User.currentPage(params);
-      expect(result).to.eql({number: 30, size: 10});
+    describe('when valid params', () => {
+      it('should return currentPage', () => {
+        const params = {number: '30', size: '10'};
+        const result = User.currentPage(params);
+        expect(result).to.eql({number: 30, size: 10});
+      });
+    });
+
+    describe('when params is undefined', () => {
+      it('should return first page as currentPage', () => {
+        const params = undefined;
+        const result = User.currentPage(params);
+        expect(result).to.eql({number: 1, size: 20});
+      });
     });
   });
 
   describe('nextPage', () => {
-    it('should return nextPage object', () => {
-      const params = {number: '2', size: '30'};
-      const result = User.nextPage(params);
-      expect(result).to.eql({number: 3, size: 30});
+    describe('when valid params', () => {
+      it('should return nextPage object', () => {
+        const params = {number: '2', size: '30'};
+        const result = User.nextPage(params);
+        expect(result).to.eql({number: 3, size: 30});
+      });
+    });
+
+    describe('when params is undefined', () => {
+      it('should return second page as nextPage', () => {
+        const params = undefined;
+        const result = User.nextPage(params);
+        expect(result).to.eql({number: 2, size: 20});
+      });
     });
   });
 });

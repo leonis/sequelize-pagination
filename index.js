@@ -78,9 +78,11 @@ const parseToInt = (value, defaultValue) => {
  * @return {Object} pagination info which contains pageNumber and pageSize properties.
  */
 const parseParams = (page, options) => {
+  const values = page || {};
+
   return {
-    pageNumber: parseToInt(page.number, 1),
-    pageSize: parseToInt(page.size, options.size)
+    pageNumber: parseToInt(values.number, 1),
+    pageSize: parseToInt(values.size, options.size)
   };
 };
 
@@ -111,7 +113,7 @@ class Pagination {
     cls.pagination = opts;
 
     cls.addScope('paginate', function(params) {
-      const parsed = parseParams((params || {}), this.pagination);
+      const parsed = parseParams(params, this.pagination);
 
       return {
         limit: parsed.pageSize,

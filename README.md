@@ -54,6 +54,15 @@ ModelClass.scope({method: ['paginate', params]}).findAll({order: 'id'})
 ModelClass.nextPage(params);
 => {size: 20, number: 3}
 
+// When Pass total count to `nextPage`, return next page info if exists.
+// NOTE: `nextPage` return `undefined` if next page does not exist.
+ModelClass.nextPage(params, totalCount);
+=> {size: 20, number: 3}
+
+// Use `hasNextPage` method to check whether next page exists, or not.
+ModelClass.hasNextPage(params, totalCount);
+=> true
+
 // Use `pagination` class method to get pagination config.
 ModelClass.pagination
 => {size: 10}

@@ -234,11 +234,29 @@ describe('Pagination', () => {
   });
 
   describe('nextPage', () => {
-    describe('when valid params', () => {
+    describe('when valid params without total', () => {
       it('should return nextPage object', () => {
         const params = {number: '2', size: '30'};
         const result = User.nextPage(params);
         expect(result).to.eql({number: 3, size: 30});
+      });
+    });
+
+    describe('when valid params with total', () => {
+      describe('and next page does not exist', () => {
+        it('should return undefined', () => {
+          const params = {number: '2', size: '30'};
+          expect(User.nextPage(params, 59)).to.eq(undefined);
+          expect(User.nextPage(params, 60)).to.eq(undefined);
+        });
+      });
+
+      describe('and next page exists', () => {
+        it('should return nextPage object', () => {
+          const params = {number: '2', size: '30'};
+          const result = User.nextPage(params, 61);
+          expect(result).to.eql({number: 3, size: 30});
+        });
       });
     });
 
@@ -247,6 +265,24 @@ describe('Pagination', () => {
         const params = undefined;
         const result = User.nextPage(params);
         expect(result).to.eql({number: 2, size: 20});
+      });
+    });
+  });
+
+  describe('hasNextPage', () => {
+    describe('when next page does not exist', () => {
+      it('should return false', () => {
+        const page = {number: '2', size: '10'};
+        expect(User.hasNextPage(page, 19)).to.eq(false);
+        expect(User.hasNextPage(page, 20)).to.eq(false);
+      });
+    });
+
+    describe('when next page exists', () => {
+      it('should return true', () => {
+        const page = {number: '2', size: '10'};
+        expect(User.hasNextPage(page, 21)).to.eq(true);
+        expect(User.hasNextPage(page, 22)).to.eq(true);
       });
     });
   });

@@ -141,18 +141,47 @@ class Pagination {
     /**
      * Get next page
      *
+     * NOTE:
+     *   - When total parameter is given, this method return next page info only if the next page exists.
+     *   - When total parameter is not given, this method always return next page info.
+     *
      * @param {Object} page - page object
      * @param {Number|String} page.size - size per page.
      * @param {Number|String} page.number - number of the page.
-     * @return {Object} next page info which contains number and size properties.
+     * @param {Number} total - total count
+     * @return {Object|undefined} next page info which contains number and size properties. undefined when next page does not exists.
      */
-    cls.nextPage = function(page) {
+    cls.nextPage = function(page, total) {
       const parsed = parseParams(page, cls.pagination);
 
-      return {
-        number: (parsed.pageNumber + 1),
+      const currentPage = {
+        number: parsed.pageNumber,
         size: parsed.pageSize
       };
+
+      if (total === undefined || this.hasNextPage(currentPage, total)) {
+        return {
+          number: (currentPage.number + 1),
+          size: currentPage.size
+        };
+      }
+
+      return undefined;
+    };
+
+    /**
+     * Check whether the next page exists, or not.
+     *
+     * @param {Object} page - page object
+     * @param {Number} page.number - size per page.
+     * @param {Number} page.size - number of the page.
+     * @param {Number} total - total count of the resource.
+     * @return {boolean} true if next page exists.
+     */
+    cls.hasNextPage = function(page, total) {
+      const parsed = parseParams(page, cls.pagination);
+
+      return (total > (parsed.pageNumber * parsed.pageSize));
     };
 
     return cls;

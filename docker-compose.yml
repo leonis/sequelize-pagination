@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: robin
       POSTGRES_PASSWORD: password
     ports:
-      - "127.0.0.1:5442:5432"
+      - "127.0.0.1:5432:5432"
     container_name: sequelize-pagination-pg
     volumes_from:
       - sequelize-pagination-datastore

@@ -30,8 +30,8 @@
     "eslint-config-leonis": "^0.0.6",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
-    "pg": "^6.1.2",
-    "sequelize": "^3.30.2"
+    "pg": "^7.x",
+    "sequelize": "^4.33.4"
   },
   "eslintConfig": {
     "extends": "leonis"

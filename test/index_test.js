@@ -5,6 +5,7 @@ const chai = require('chai');
 chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 
+const Sequelize = require('sequelize');
 const Util = require('./support/util.js');
 const Pagination = require('../index.js');
 const User = Pagination.paginatable(require('./support/model.js'));
@@ -15,7 +16,7 @@ const makeIds = (start, count) => {
   });
 };
 
-/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-nested-callbacks,max-len */
 describe('Pagination', () => {
   before(Util.init);
   after(Util.cleanup);
@@ -72,7 +73,7 @@ describe('Pagination', () => {
         co(function * () {
           const params = undefined;
           const userIds = yield User.scope({method: ['paginate', params]})
-            .findAll({order: 'id'})
+            .findAll({order: Sequelize.col('id')})
             .then((users) => {
               return users.map((user) => {
                 return user.getDataValue('id');
@@ -90,7 +91,7 @@ describe('Pagination', () => {
       it('should return first page', (done) => {
         co(function * () {
           const params = {};
-          const users = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'});
+          const users = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')});
           const userIds = users.map((user) => {
             return user.getDataValue('id');
           });
@@ -107,7 +108,7 @@ describe('Pagination', () => {
         it('should return the first page', (done) => {
           co(function * () {
             const params = {number: 'test10', size: 10};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -125,7 +126,7 @@ describe('Pagination', () => {
         it('should return the first page', (done) => {
           co(function * () {
             const params = {number: '-10', size: 10};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -143,7 +144,7 @@ describe('Pagination', () => {
         it('should return the first page', (done) => {
           co(function * () {
             const params = {number: {key: 'value'}, size: 10};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -163,7 +164,7 @@ describe('Pagination', () => {
         it('should return the page with default size', (done) => {
           co(function * () {
             const params = {number: 2, size: 'my favorite'};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -181,7 +182,7 @@ describe('Pagination', () => {
         it('should return the page with default size', (done) => {
           co(function * () {
             const params = {number: 1, size: '-30'};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -199,7 +200,7 @@ describe('Pagination', () => {
         it('should return the page with default size', (done) => {
           co(function * () {
             const params = {number: 1, size: {key: 'value'}};
-            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: 'id'})
+            const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
                 return users.map((user) => {
                   return user.getDataValue('id');
@@ -287,4 +288,4 @@ describe('Pagination', () => {
     });
   });
 });
-/* eslint-enable max-nested-callbacks */
+/* eslint-enable max-nested-callbacks,max-len */

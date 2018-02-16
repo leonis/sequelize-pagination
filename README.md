@@ -1,6 +1,8 @@
 # sequelize-pagination
 
 [![CircleCI](https://circleci.com/gh/leonis/sequelize-pagination/tree/master.svg?style=shield&circle-token=a3a6c6f7416a335be555cfbaf8e9e2cb126c2ec5)](https://circleci.com/gh/leonis/sequelize-pagination/tree/master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/79b98277b214c11b1173/maintainability)](https://codeclimate.com/github/leonis/sequelize-pagination/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/79b98277b214c11b1173/test_coverage)](https://codeclimate.com/github/leonis/sequelize-pagination/test_coverage)
 
 `sequelize-pagination` is a Sequelize plugin to make the sequelize model paginatable.
 

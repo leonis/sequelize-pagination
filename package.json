@@ -1,6 +1,6 @@
 {
   "name": "sequelize-pagination",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "sequelize plugin to paginate query response using scope.",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,7 @@
     "pagination"
   ],
   "author": "dev@irow.io",
-  "license": "UNLICENSED",
-  "private": true,
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/leonis/sequelize-pagination/issues"
   },

@@ -43,6 +43,7 @@ jobs:
             ./cc-test-reporter after-build --exit-code $?
           environment:
             TEST_DB: postgres://root:@127.0.0.1:5432/testdb
+            CC_TEST_REPORTER_ID: 338bacf1f7de2c7c1973b2641bd717559655b0c892503773457b9271036171f5
 
 workflows:
   version: 2

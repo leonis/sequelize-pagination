@@ -16,10 +16,16 @@ jobs:
       - run:
           name: Install dependencies
           command: yarn install --prefer-offline
+      - run:
+          name: Install codeclimate reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
       - save_cache:
           key: dependency-cache-{{ arch }}-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+            - ./cc-test-reporter
       - run:
           name: Install psql
           command: sudo apt-get install postgresql-client
@@ -30,7 +36,11 @@ jobs:
             dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           name: lint and test
-          command: yarn run ci
+          command: |
+            yarn run lint
+            ./cc-test-reporter before-build
+            yarn run test
+            ./cc-test-reporter after-build --exit-code $?
           environment:
             TEST_DB: postgres://root:@127.0.0.1:5432/testdb
 

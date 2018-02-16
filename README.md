@@ -82,15 +82,10 @@ $ yarn install
 ### Define environment variables.
 
 ```
-export POSTGRES_USER=postgres
-export POSTGRES_PASSWORD=postgres
-
-export TEST_DB=postgres://robin:password@localhost:5442/ci_test
+export TEST_DB=postgres://postgres:pass@127.0.0.1:5432/testdb
 ```
 
 ### Launch a database for test.
-
-Use `docker-compose`!
 
 ```
 $ docker-compose up
@@ -98,17 +93,8 @@ $ docker-compose up
 
 ### Test
 
-Create a table for testcase.
-
-```
-$ psql -U postgres -f ./database/bootstrap.sql
-```
-
 Use tasks in package.json.
 
 ```
-$ npm run ci
-
-# or
-$ yarnkpkg run ci
+$ yarn run ci
 ```

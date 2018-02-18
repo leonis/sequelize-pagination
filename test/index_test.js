@@ -69,8 +69,8 @@ describe('Pagination', () => {
 
   describe('paginate', () => {
     describe('with undefined', () => {
-      it('should return first page', (done) => {
-        co(function * () {
+      it('should return first page', () => {
+        return co(function * () {
           const params = undefined;
           const userIds = yield User.scope({method: ['paginate', params]})
             .findAll({order: Sequelize.col('id')})
@@ -81,15 +81,13 @@ describe('Pagination', () => {
             });
 
           expect(userIds).to.eql(makeIds(0, 20));
-        })
-        .then(done)
-        .catch(done);
+        });
       });
     });
 
     describe('with empty object', () => {
-      it('should return first page', (done) => {
-        co(function * () {
+      it('should return first page', () => {
+        return co(function * () {
           const params = {};
           const users = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')});
           const userIds = users.map((user) => {
@@ -97,16 +95,14 @@ describe('Pagination', () => {
           });
 
           expect(userIds).to.eql(makeIds(0, 20));
-        })
-        .then(done)
-        .catch(done);
+        });
       });
     });
 
     describe('with invalid number value', () => {
       describe('when the value is a invalid string', () => {
-        it('should return the first page', (done) => {
-          co(function * () {
+        it('should return the first page', () => {
+          return co(function * () {
             const params = {number: 'test10', size: 10};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -116,15 +112,13 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(0, 10));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
 
       describe('when the value is a negative number string', () => {
-        it('should return the first page', (done) => {
-          co(function * () {
+        it('should return the first page', () => {
+          return co(function * () {
             const params = {number: '-10', size: 10};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -134,15 +128,13 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(0, 10));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
 
       describe('when the value is invalid object', () => {
-        it('should return the first page', (done) => {
-          co(function * () {
+        it('should return the first page', () => {
+          return co(function * () {
             const params = {number: {key: 'value'}, size: 10};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -152,17 +144,15 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(0, 10));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
     });
 
     describe('with invalid size value', () => {
       describe('when the value is a invalid string', () => {
-        it('should return the page with default size', (done) => {
-          co(function * () {
+        it('should return the page with default size', () => {
+          return co(function * () {
             const params = {number: 2, size: 'my favorite'};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -172,15 +162,13 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(20, 20));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
 
       describe('when the value is a negative number string', () => {
-        it('should return the page with default size', (done) => {
-          co(function * () {
+        it('should return the page with default size', () => {
+          return co(function * () {
             const params = {number: 1, size: '-30'};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -190,15 +178,13 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(0, 20));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
 
       describe('when the value is invalid object', () => {
-        it('should return the page with default size', (done) => {
-          co(function * () {
+        it('should return the page with default size', () => {
+          return co(function * () {
             const params = {number: 1, size: {key: 'value'}};
             const userIds = yield User.scope({method: ['paginate', params]}).findAll({order: Sequelize.col('id')})
               .then((users) => {
@@ -208,9 +194,7 @@ describe('Pagination', () => {
               });
 
             expect(userIds).to.eql(makeIds(0, 20));
-          })
-          .then(done)
-          .catch(done);
+          });
         });
       });
     });

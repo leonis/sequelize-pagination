@@ -27,9 +27,6 @@ jobs:
             - ./node_modules
             - ./cc-test-reporter
       - run:
-          name: Install psql
-          command: sudo apt-get install postgresql-client
-      - run:
           name: Wait for postgres
           command: |
             sleep 5
